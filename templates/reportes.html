@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RiverMC</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='reportes.css') }}">
+</head>
+<body>
+<nav class="navbar">
+    <a href="{{ url_for('home') }}" class="logo">RiverMC</a>
+    <ul>
+        <li><a href="{{ url_for('home') }}">Inicio</a></li>
+        <li><a href="{{ url_for('registrarmoto') }}">Registrar Moto</a></li>
+        <li><a href="{{ url_for('historial') }}">Historial</a></li>
+        <li><a href="{{ url_for('inventario') }}">Inventario</a></li>
+        <li><a href="{{ url_for('configuracion') }}">Configuración</a></li>
+    </ul>
+</nav>
+<div class="reportes-box">
+
+    <section class="reportes">
+
+        <h2>Reportes</h2>
+
+            {% if mostrar_alerta %}
+
+            <div class="alerta-mes">
+
+                ⚠ Debes finalizar el mes anterior
+
+            </div>
+
+            {% endif %}
+
+            <a href="{{ url_for('reportes', filtro='hoy') }}" class="btn">Hoy</a>
+            <a href="{{ url_for('reportes', filtro='semana') }}" class="btn">Esta Semana</a>
+            <a href="{{ url_for('reportes', filtro='mes') }}" class="btn">Este Mes</a>
+            
+        <div class="reportes-container">
+
+            <div class="reporte-card">
+                <h3>Total ingresos (lavado + productos)</h3>
+                <p>{{ total_ingresos }}</p>
+            </div>
+
+            <div class="reporte-card">
+                <h3>Total motos lavadas</h3>
+                <p>{{ total_motos }}</p>
+            </div>
+
+            <div class="reporte-card">
+                <h3>Servicio más vendido</h3>
+                <p>{{ servicio_top }}</p>
+            </div>
+
+        </div>
+
+        <a href="{{ url_for('exportar_reporte') }}" class="btn">Exportar Reporte</a>
+        <a href="{{ url_for('finalizar_mes') }}" class="btn-finalizar-mes"> Finalizar Mes</a>
+
+    </section>
+
+</div>
+</body>
+</html>

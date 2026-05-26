@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RiverMC</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='configuracion.css') }}">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <a href="{{ url_for('home') }}" class="logo">RiverMC</a>
+    <ul>
+        <li><a href="{{ url_for('home') }}">Inicio</a></li>
+        <li><a href="{{ url_for('registrarmoto') }}">Registrar Moto</a></li>
+        <li><a href="{{ url_for('historial') }}">Historial</a></li>
+        <li><a href="{{ url_for('inventario') }}">Inventario</a></li>
+        <li><a href="{{ url_for('reportes') }}">Reportes</a></li>
+    </ul>
+</nav>
+
+<!-- CONFIGURACIÓN -->
+<section class="nuevos_servicios">
+
+    <h2 class="titulo-config">Configuración de precios y servicios</h2>
+
+    <div class="config-container">
+
+        <!-- IZQUIERDA -->
+        <div class="config-box">
+            {% set servicio_editar = servicio_editar if servicio_editar is defined else None %}
+            <form action="{% if servicio_editar %}{{ url_for('editar_servicio', id=servicio_editar[0]) }}{% else %}{{ url_for('configuracion') }}{% endif %}"
+                method="post" class="formulario">
+
+                <h3>Servicios</h3>
+
+                <div class="form-group">
+                    <label for="servicio">Nuevo servicio:</label>
+                    <input type="text" id="servicio" name="servicio" value="{{ servicio_editar[1] if servicio_editar else '' }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="precio">Nuevo precio:</label>
+                    <input type="number" id="precio" name="precio" value="{{ servicio_editar[2] if servicio_editar else '' }}">
+                </div>
+
+                <button type="submit" class="button-guardar">Guardar</button>
+
+            </form>
+
+        </div>
+
+        <!-- DERECHA -->
+        <div class="config-box">
+
+            <form action="{{ url_for('configuracion') }}" method="post" class="formulario">
+
+                <h3>Cambiar Contraseña</h3>
+                {% if mensaje %}
+
+                <p class="mensaje-config">
+                    {{ mensaje }}
+                </p>
+
+                {% endif %}
+
+                <div class="form-group">
+                    <label for="actual">Contraseña Actual:</label>
+                    <input type="password" id="actual" name="actual">
+                </div>
+
+                <div class="form-group">
+                    <label for="nueva">Nueva Contraseña:</label>
+                    <input type="password" id="nueva" name="nueva">
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmar">Confirmar Contraseña:</label>
+                    <input type="password" id="confirmar" name="confirmar">
+                </div>
+
+                <button type="submit" class="button-contraseña">Cambiar Contraseña</button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+<div class="tabla-servicios">
+
+    <h2>Servicios registrados</h2>
+
+    <table class="tabla">
+
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+<tbody>
+
+    {% for servicio in servicios %}
+
+    <tr>
+
+        <td>{{ servicio[1] }}</td>
+
+        <td>${{ servicio[2] }}</td>
+
+        <td class="acciones">
+
+            <a href="{{ url_for('editar_servicio', id=servicio[0]) }}"
+               class="btn-editar">
+               Editar
+            </a>
+
+            <a href="{{ url_for('eliminar_servicio', id=servicio[0]) }}"
+               class="btn-eliminar">
+               Eliminar
+            </a>
+
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+</tbody>
+
+    </table>
+
+</div>
+
+</body>
+</html>

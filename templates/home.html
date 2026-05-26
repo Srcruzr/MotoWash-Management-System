@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RiverMC</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+</head>
+<body>
+<nav class="navbar">
+    <a href="{{ url_for('home') }}" class="logo">RiverMC</a>
+    <ul>
+        <li><a href="{{ url_for('registrarmoto') }}">Registrar Moto</a></li>
+        <li><a href="{{ url_for('historial') }}">Historial</a></li>
+        <li><a href="{{ url_for('inventario') }}">Inventario</a></li>
+        <li><a href="{{ url_for('reportes') }}">Reportes</a></li>
+        <li><a href="{{ url_for('configuracion') }}">Configuración</a></li>
+    </ul>
+</nav>
+<section class="servicios-activos">
+
+    <h2>Servicios Activos</h2>
+
+    <div class="tabla-contenedor">
+        <form class="buscador" method="GET" action="{{ url_for('home') }}">
+
+            <input
+                type="text"
+                placeholder="Buscar por placa..."
+                id="buscarPlaca"
+                name="buscarPlaca"
+            >
+
+            <button type="submit" class="btn-buscar">
+                Buscar
+            </button>
+                    <a href="{{ url_for('home') }}" class="btn-volver-home">Volver</a>
+        </form>
+    </div>
+        <table class="tabla-servicios">
+            <thead>
+                <tr>
+                    <th>Placa</th>
+                    <th>Dueño</th>
+                    <th>Teléfono</th>
+                    <th>Servicio</th>
+                    <th>Productos</th>
+                    <th>Metodo de pago</th>
+                    <th>Total</th>
+                    <th>Hora de entrada</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ingreso in ingresos %}
+                <tr>
+                    <td>{{ ingreso[1] }}</td>
+                    <td>{{ ingreso[2] }}</td>
+                    <td>{{ ingreso[3] }}</td>
+                    <td>{{ ingreso[4] }}</td>
+                    <td>{{ ingreso[5] }}</td>
+                    <td>{{ ingreso[6] }}</td>
+                    <td>{{ ingreso[7] }}</td>
+                    <td>{{ ingreso[8] }}</td>
+                    <td class="acciones">
+                        <button class="btn-productos" onclick="abrirModalProductos('{{ ingreso[0] }}')">Productos</button>
+                        <a href="{{ url_for('finalizar_servicio', id=ingreso[0]) }}" class="btn-finalizar">Finalizar</a>
+                        <a href="{{ url_for('editar_ingreso', id=ingreso[0]) }}" class="btn-editar">Editar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+<div id="modalProductos" class="modal">
+
+    <div class="modal-contenido">
+
+        <!-- IZQUIERDA -->
+        <div class="modal-izquierda">
+
+            <h2>Productos para el servicio</h2>
+
+            <h3>Seleccionar producto</h3>
+
+            <table class="tabla-modal">
+
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Cantidad</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                {% for producto in productos %}
+
+                <tr>
+
+                    <td>{{ producto[1] }}</td>
+
+                    <td>{{ producto[2] }}</td>
+
+                    <td>{{ producto[3] }}</td>
+
+                    <td>
+                        <span class="cantidad">0</span>
+                    </td>
+
+                    <td class="acciones-modal">
+
+                        <button
+                            type="button"
+                            onclick="sumar(this)"
+                            {% if producto[3] == 0 %}disabled{% endif %}
+                        >
+                            +
+                        </button>
+
+                        <button
+                            type="button"
+                            onclick="restar(this)"
+                        >
+                            -
+                        </button>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <!-- DERECHA -->
+        <div class="modal-derecha">
+
+            <h3>Resumen del pedido</h3>
+
+            <p>Total productos:</p>
+            <h2>$0</h2>
+
+            <button onclick="guardarProductos()">
+                Guardar productos
+            </button>
+
+        </div>
+
+        <!-- CERRAR -->
+        <span class="cerrar" onclick="cerrarModalProductos()">
+            &times;
+        </span>
+
+    </div>
+
+</div>
+<script>
+
+let ingresoActual = 0;
+
+function abrirModalProductos(id){
+
+    ingresoActual = id;
+
+    document.getElementById("modalProductos").style.display = "flex";
+}
+
+function cerrarModalProductos(){
+
+    document.getElementById("modalProductos").style.display = "none";
+}
+
+window.onclick = function(event){
+
+    let modal = document.getElementById("modalProductos");
+
+    if(event.target == modal){
+
+        modal.style.display = "none";
+    }
+}
+
+function actualizarTotal(){
+
+    let filas = document.querySelectorAll(".tabla-modal tbody tr");
+
+    let total = 0;
+
+    filas.forEach(fila => {
+
+        let precio = parseInt(fila.children[1].innerText);
+
+        let cantidad = parseInt(
+            fila.querySelector(".cantidad").innerText
+        );
+
+        total += precio * cantidad;
+
+    });
+
+    document.querySelector(".modal-derecha h2").innerText =
+        "$" + total;
+}
+
+function sumar(btn){
+
+    let fila = btn.closest("tr");
+
+    let stock = parseInt(fila.children[2].innerText);
+
+    let cantidad = fila.querySelector(".cantidad");
+
+    let numero = parseInt(cantidad.innerText);
+
+    // NO SUPERAR STOCK
+    if(numero < stock){
+
+        numero++;
+
+        cantidad.innerText = numero;
+
+        actualizarTotal();
+    }
+}
+
+function restar(btn){
+
+    let fila = btn.closest("tr");
+
+    let cantidad = fila.querySelector(".cantidad");
+
+    let numero = parseInt(cantidad.innerText);
+
+    if(numero > 0){
+
+        numero--;
+    }
+
+    cantidad.innerText = numero;
+
+    actualizarTotal();
+}
+
+function guardarProductos(){
+
+    let filas = document.querySelectorAll(".tabla-modal tbody tr");
+
+    let productos = [];
+
+    filas.forEach(fila => {
+
+        let nombre = fila.children[0].innerText;
+
+        let precio = parseInt(fila.children[1].innerText);
+
+        let cantidad = parseInt(
+            fila.querySelector(".cantidad").innerText
+        );
+
+        if(cantidad > 0){
+
+            productos.push({
+
+                nombre: nombre,
+                precio: precio,
+                cantidad: cantidad
+            });
+        }
+    });
+
+    fetch('/guardar_productos', {
+
+        method: 'POST',
+
+        headers: {
+            'Content-Type': 'application/json'
+        },
+
+        body: JSON.stringify({
+
+            ingreso_id: ingresoActual,
+            productos: productos
+
+        })
+
+    })
+    .then(response => response.json())
+
+    .then(data => {
+
+        location.reload();
+
+    });
+}
+
+</script>
+</body>
+</html>
+<script>
+
+
+function actualizarTotal(){
+
+    let filas = document.querySelectorAll(".tabla-modal tbody tr");
+
+    let total = 0;
+
+    filas.forEach(fila => {
+
+        let precio = parseInt(fila.children[1].innerText);
+        let cantidad = parseInt(fila.querySelector(".cantidad").innerText);
+
+        total += precio * cantidad;
+
+    });
+
+    document.querySelector(".modal-derecha h2").innerText = "$" + total;
+
+}
+
+function cambiarCantidad(btn, cambio){
+
+    let fila = btn.closest("tr");
+    let cantidadSpan = fila.querySelector(".cantidad");
+
+    let cantidad = parseInt(cantidadSpan.innerText);
+
+    cantidad = cantidad + cambio;
+
+    if(cantidad < 0) cantidad = 0;
+
+    cantidadSpan.innerText = cantidad;
+}
+
+</script>
+
+

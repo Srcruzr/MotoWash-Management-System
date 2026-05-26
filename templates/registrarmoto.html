@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RiverMC</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='register.css' )}}">
+</head>
+<body>
+
+    <div class="contenedor">
+
+        <form action="{% if ingreso_editar %}{{ url_for('editar_ingreso', id=ingreso_editar[0]) }}
+        {% else %}
+        {{ url_for('registrarmoto') }}
+        {% endif %}"
+        method="post"
+        class="formulario"
+        >
+            <h2>Registrar Ingreso</h2>
+
+            <div class="form-group">
+                <label for="placa">Placa:</label>
+                <input type="text" class="form-control" id="placa" name="placa" value="{{ ingreso_editar[1] if ingreso_editar else '' }}" placeholder="Ingresa Placa Vehiculo">
+            </div>
+
+            <div class="form-group">
+                <label for="name">Nombre:</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ ingreso_editar[2] if ingreso_editar else '' }}" placeholder="Ingresa nombre del dueño">
+            </div>
+
+            <div class="form-group">
+                <label for="telefono">Telefono:</label>
+                <input type="number" class="form-control" id="telefono" name="telefono" value="{{ ingreso_editar[3] if ingreso_editar else '' }}" placeholder="Ingresa telefono">
+            </div>
+
+            <div class="form-group">
+                <label for="servicio">Servicios:</label>
+                <select class="form-control" name="servicio" id="servicio">
+                    <option value="">Selecciona el servicio</option>
+                    {% for servicio in servicios %}
+                    <option value="{{ servicio[1] }}"  {% if ingreso_editar and ingreso_editar[4] == servicio[1] %}
+                    selected
+                    {% endif %}
+                    >
+                    {{ servicio[1] }} - ${{ servicio[2] }}
+                    </option>
+                    {% endfor %}
+
+                </select>
+            </div>
+
+            <div class="form-group">
+
+                <label for="metododepago">
+                    Método de pago (predeterminado):
+                </label>
+
+                <select class="form-control" name="metododepago" id="metododepago">
+
+                    <option value="Efectivo"
+                    {% if ingreso_editar and ingreso_editar[5] == 'Efectivo' %}
+                        selected
+                    {% endif %}
+                    >
+                        Efectivo
+                    </option>
+
+                    <option value="Nequi"
+                    {% if ingreso_editar and ingreso_editar[5] == 'Nequi' %}
+                        selected
+                    {% endif %}
+                    >
+                        Nequi
+                    </option>
+
+                    <option value="Daviplata"
+                    {% if ingreso_editar and ingreso_editar[5] == 'Daviplata' %}
+                        selected
+                    {% endif %}
+                    >
+                        Daviplata
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- BOTONES -->
+            <div class="botones">
+
+                <button type="submit" class="button-guardar">
+                    Guardar
+                </button>
+
+                <button type="reset" class="button-limpiar">
+                    Limpiar
+                </button>
+
+                <a href="{{ url_for('home') }}" class="boton">
+                    Volver
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RiverMC</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='inventario.css') }}">
+</head>
+<body>
+<nav class="navbar">
+    <a href="{{ url_for('home') }}" class="logo">RiverMC</a>
+    <ul>
+        <li><a href="{{ url_for('home') }}">Inicio</a></li>
+        <li><a href="{{ url_for('registrarmoto') }}">Registrar Moto</a></li>
+        <li><a href="{{ url_for('historial') }}">Historial</a></li>
+        <li><a href="{{ url_for('reportes') }}">Reportes</a></li>
+        <li><a href="{{ url_for('configuracion') }}">Configuración</a></li>
+    </ul>
+</nav>
+<section class="inventario">
+
+    <h2 class="titulo-config">Inventario</h2>
+
+    <!-- FORMULARIO -->
+    <div class="config-container">
+
+        <div class="config-box">
+
+            <form action="{% if producto_editar %}
+            {{ url_for('editar_producto', id=producto_editar[0]) }}
+            {% else %}
+            {{ url_for('inventario') }}
+            {% endif %}"method="post" class="formulario">
+
+                <h3>Agregar/Editar Producto</h3>
+
+                <div class="form-group">
+                    <label for="name">Nombre:</label>
+                    <input type="text" name="name" id="name"value="{{ producto_editar[1] if producto_editar else '' }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="precio">Precio:</label>
+                    <input type="number" name="precio" id="precio"value="{{ producto_editar[2] if producto_editar else '' }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="stock">Stock:</label>
+                    <input type="number" name="stock" id="stock"value="{{ producto_editar[3] if producto_editar else '' }}">
+                </div>
+
+                <div class="btn-container">
+                    <button type="submit" class="button-guardar">
+                        Guardar Producto
+                    </button>
+
+                    <button type="reset" class="button-limpiar">
+                        Limpiar
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- TABLA -->
+<!-- TABLA PRODUCTOS -->
+<section class="tabla-section">
+
+    <div class="tabla-header">
+
+        <h3>Productos</h3>
+
+    </div>
+
+    <table class="tabla-productos">
+
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Valor Total</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        {% for producto in productos %}
+
+        <tr>
+
+            <td>{{ producto[1] }}</td>
+
+            <td>${{ producto[2] }}</td>
+
+            <td>{{ producto[3] }}</td>
+
+            <td>
+                ${{ producto[2] * producto[3] }}
+            </td>
+
+            <td class="acciones">
+
+                <a href="{{ url_for('editar_producto', id=producto[0]) }}"
+                class="btn-editar">
+                    Editar
+                </a>
+
+                <a href="{{ url_for('eliminar_producto', id=producto[0]) }}"
+                class="btn-eliminar">
+                    Eliminar
+                </a>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</section>
+
+    <!-- REPORTE -->
+    <section class="tabla-section">
+
+        <section class="tabla-section">
+
+        <div class="tabla-header">
+
+            <h3>Reporte Productos</h3>
+
+            <a href="{{ url_for('exportar_reporte_productos') }}"
+            class="exportar-inventario">
+                Exportar Reporte Productos
+            </a>
+
+        </div>
+
+        <table class="tabla-productos">
+
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Total Vendido</th>
+                    <th>Total Ingreso</th>
+                    <th>Total Stock</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+            {% for reporte in reporte_productos %}
+
+            <tr>
+
+                <td>{{ reporte[0] }}</td>
+                <td>{{ reporte[1] }}</td>
+                <td>${{ reporte[2] }}</td>
+                <td>{{ reporte[3] }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+</section>   
+</body>
+</html>

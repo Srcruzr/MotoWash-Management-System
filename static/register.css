@@ -1,0 +1,191 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-image: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.7),
+        rgba(0, 0, 0, 0.7)
+    ), url("/static/images/homefond3.jpeg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    min-height: 100vh;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+/* CONTENEDOR */
+
+.contenedor{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+/* FORMULARIO */
+
+.formulario{
+    background-color: rgba(255, 255, 255, 0.08);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    border: 1px solid rgba(255,255,255,0.2);
+
+    padding: 25px;
+    border-radius: 10px;
+
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+
+    max-width: 500px;
+    width: 100%;
+
+    margin: 0 auto;
+}
+
+/* TITULO */
+
+h2{
+    text-align: center;
+    color: white;
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+/* FORM GROUP */
+
+.form-group{
+    margin-bottom: 18px;
+}
+
+/* LABELS */
+
+label{
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: white;
+}
+
+/* INPUTS Y SELECT */
+
+.form-control{
+    font-size: 18px;
+    width: 100%;
+    padding: 15px;
+
+    border: 1px solid #ccc;
+    border-radius: 6px;
+
+    transition: border-color 0.3s ease;
+
+    background: white;
+}
+
+/* FOCUS */
+
+.form-control:focus{
+    outline: none;
+    border-color: #1a2537;
+}
+
+/* BOTONES CONTENEDOR */
+
+.botones{
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+}
+
+/* BOTONES GENERALES */
+
+button,
+a.boton{
+    border: none;
+
+    width: 180px;
+
+    color: white;
+    font-size: 18px;
+
+    padding: 15px 20px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+
+    font-weight: bold;
+
+    text-align: center;
+    text-decoration: none;
+
+    display: inline-block;
+}
+
+/* GUARDAR */
+
+.button-guardar{
+    background: black;
+}
+
+.button-guardar:hover{
+    background: #2563eb;
+    transform: translateY(-2px);
+}
+
+/* LIMPIAR */
+
+.button-limpiar{
+    background: #6b7280;
+}
+
+.button-limpiar:hover{
+    background: #ef4444;
+    transform: translateY(-2px);
+}
+
+/* VOLVER */
+
+.boton{
+    background: black;
+}
+
+.boton:hover{
+    background: #2563eb;
+    transform: translateY(-2px);
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 768px){
+
+    .formulario{
+        width: 100%;
+    }
+
+    .botones{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    button,
+    a.boton{
+        width: 100%;
+    }
+}

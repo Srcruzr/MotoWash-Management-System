@@ -1,0 +1,257 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+/* fondo de pagina*/
+body{
+    background-image: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.7),
+        rgba(0, 0, 0, 0.7)
+    ), url("/static/images/homefond5.jpeg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+.logo{
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
+.navbar{
+    width: 100%;
+    min-height: 80px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    gap: 20px;
+}
+
+.navbar h1{
+    color: white;
+    font-size: 28px;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+.navbar ul{
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.navbar ul li a{
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    transition: 0.3s ease;
+    position: relative;
+    white-space: nowrap;
+}
+
+.navbar ul li a:hover{
+    background: black;
+    transform: translateY(-2px);
+}
+
+.navbar ul li a::after{
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    left: 0;
+    bottom: -4px;
+    background: white;
+    transition: 0.3s;
+}
+
+.navbar ul li a:hover::after{
+    width: 100%;
+}
+.historial{
+    padding: 40px;
+    color: white;
+}
+
+.historial h2{
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 32px;
+}
+/* contenedor tabla */
+.tabla-contenedor{
+    overflow-x: auto;
+}
+
+/* tabla */
+.tabla-servicios{
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* encabezados */
+.tabla-servicios th{
+    padding: 15px;
+    background: rgba(0,0,0,0.4);
+    color: white;
+    text-align: left;
+}
+
+/* celdas */
+.tabla-servicios td{
+    padding: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+/* botones acciones */
+.acciones{
+    display: flex;
+    gap: 10px;
+}
+.btn-volver-home{
+
+    background: #444;
+    color: white;
+    text-decoration: none;
+
+    padding: 10px 18px;
+
+    border-radius: 8px;
+
+    font-weight: bold;
+
+    transition: 0.3s;
+}
+.buscador{
+
+    display: flex;
+
+    gap: 10px;
+
+    align-items: center;
+}
+
+.btn-volver-home:hover{
+
+    background: #222;
+
+    transform: translateY(-2px);
+}
+.buscador{
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-bottom: 25px;
+    margin-top: 10px;
+}
+
+.buscador input{
+    width: 300px;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    outline: none;
+}
+.buscador input::placeholder{
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.btn-buscar{
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #2563eb;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-buscar:hover{
+    background: #1d4ed8;
+    transform: translateY(-2px);
+}
+@media(max-width: 900px){
+
+    .navbar{
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .navbar ul{
+        justify-content: center;
+    }
+
+    .historial{
+        padding: 20px;
+    }
+
+    .historial h2{
+        font-size: 24px;
+    }
+
+    .tabla-servicios{
+        min-width: 700px;
+    }
+
+}
+.paginacion {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    font-family: Arial, sans-serif;
+}
+
+.paginacion a {
+    text-decoration: none;
+    background: #1e88e5;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.2s;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+
+.paginacion a:hover {
+    background: #1565c0;
+    transform: scale(1.05);
+}
+
+.paginacion span {
+    font-weight: bold;
+    color: white;
+    padding: 8px 12px;
+}

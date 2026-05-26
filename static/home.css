@@ -1,0 +1,412 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+/* fondo de pagina*/
+body{
+    background-image: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.7),
+        rgba(0, 0, 0, 0.7)
+    ), url("/static/images/homefond4.jpeg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+/* final fondo de pagina*/
+.logo{
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
+/* barra de navegación*/
+.navbar{
+    width: 100%;
+    min-height: 80px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    gap: 20px;
+}
+
+.navbar h1{
+    color: white;
+    font-size: 28px;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+.navbar ul{
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.navbar ul li a{
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    transition: 0.3s ease;
+    position: relative;
+    white-space: nowrap;
+}
+
+.navbar ul li a:hover{
+    background: black;
+    transform: translateY(-2px);
+}
+
+.navbar ul li a::after{
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    left: 0;
+    bottom: -4px;
+    background: white;
+    transition: 0.3s;
+}
+
+.navbar ul li a:hover::after{
+    width: 100%;
+}
+/* final barra de navegación */
+/* inicio servicios*/
+.servicios-activos{
+    padding: 40px;
+    color: white;
+}
+
+.servicios-activos h2{
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 32px;
+}
+/* final servicios*/
+
+/* contenedor tabla */
+.tabla-contenedor{
+    overflow-x: auto;
+}
+
+/* tabla */
+.tabla-servicios{
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* encabezados */
+.tabla-servicios th{
+    padding: 15px;
+    background: rgba(0,0,0,0.4);
+    color: white;
+    text-align: left;
+}
+
+/* celdas */
+.tabla-servicios td{
+    padding: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+/* botones acciones */
+.acciones{
+    display: flex;
+    gap: 10px;
+}
+
+.btn-productos,
+.btn-finalizar,
+.btn-editar{
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+}
+
+/* colores */
+.btn-productos{ background: #2563eb; }
+.btn-finalizar{ background: #16a34a; }
+.btn-editar{ background: #f59e0b; }
+
+.buscador{
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-bottom: 25px;
+    margin-top: 10px;
+}
+
+.buscador input{
+    width: 300px;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    outline: none;
+}
+.buscador input::placeholder{
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.btn-buscar{
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #2563eb;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-buscar:hover{
+    background: #1d4ed8;
+    transform: translateY(-2px);
+}
+.btn-volver-home{
+
+    text-decoration: none;
+    padding: 10px 18px;
+    background: #444;
+    color: white;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-volver-home:hover{
+
+    background: #222;
+}
+.modal{
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-contenido{
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border-radius: 15px;
+    padding: 20px;
+    width: 90%;
+    max-width: 1000px;
+
+    display: flex;
+    gap: 20px;
+
+    color: white;
+    position: relative;
+}
+
+/* IZQUIERDA */
+.modal-izquierda{
+    flex: 2;
+}
+
+/* DERECHA */
+.modal-derecha{
+    flex: 1;
+    background: rgba(0,0,0,0.3);
+    padding: 15px;
+    border-radius: 10px;
+}
+
+/* TABLA */
+.tabla-modal{
+    width: 100%;
+    margin-top: 10px;
+    border-collapse: collapse;
+}
+
+.tabla-modal th,
+.tabla-modal td{
+    padding: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    text-align: center;
+}
+
+/* BOTONES + - */
+.btn-mas,
+.btn-menos{
+    padding: 5px 10px;
+    margin: 2px;
+    cursor: pointer;
+}
+
+/* BOTÓN GUARDAR */
+.btn-guardar{
+    margin-top: 15px;
+    width: 100%;
+    padding: 10px;
+    background: black;
+    color: white;
+    border: none;
+    border-radius: 8px;
+}
+/* BOTONES + Y - */
+.acciones-modal button{
+
+    width: 35px;
+    height: 35px;
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 20px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    margin: 0 5px;
+
+    transition: 0.3s;
+}
+
+/* BOTON + */
+.acciones-modal button:first-child{
+
+    background: #28a745;
+    color: white;
+}
+
+.acciones-modal button:first-child:hover{
+
+    background: #218838;
+    transform: scale(1.08);
+}
+
+/* BOTON - */
+.acciones-modal button:last-child{
+
+    background: #dc3545;
+    color: white;
+}
+
+.acciones-modal button:last-child:hover{
+
+    background: #c82333;
+    transform: scale(1.08);
+}
+.buscador{
+
+    display: flex;
+
+    gap: 10px;
+
+    align-items: center;
+}
+
+/* BOTON GUARDAR PRODUCTOS */
+.modal-derecha button{
+
+    width: 100%;
+
+    padding: 14px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #007bff;
+    color: white;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    margin-top: 20px;
+
+    transition: 0.3s;
+}
+
+.modal-derecha button:hover{
+
+    background: #0056b3;
+
+    transform: translateY(-2px);
+}
+
+/* TOTAL */
+.modal-derecha h2{
+
+    margin-top: 10px;
+
+    color: #28a745;
+
+    font-size: 32px;
+}
+
+/* CERRAR */
+.cerrar{
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 25px;
+    cursor: pointer;
+}
+/* responsive*/
+@media(max-width: 900px){
+
+    .navbar{
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .navbar ul{
+        justify-content: center;
+    }
+
+    .servicios-activos{
+        padding: 20px;
+    }
+
+    .servicios-activos h2{
+        font-size: 24px;
+    }
+
+    .tabla-servicios{
+        min-width: 700px;
+    }
+}

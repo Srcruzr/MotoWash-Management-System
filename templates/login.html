@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RiverMC</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='login.css' )}}">
+</head>
+<body>
+    <section class="login-section">
+        <form action="{{ url_for('login') }}" method="post" class="formulario">
+            <h1>Acceso</h1>
+            <div class="contenedor">
+                {% if mesage is defined and mesage %}
+                <div class="alert alert-warning">{{ mesage }}</div>
+                {% endif %}
+                <div class="input-contenedor">
+                    <ion-icon name="mail-outline"></ion-icon>
+                    <label for="name">Nombre:</label>
+                    <input type="text" class="form-control" id="nam" name="name" placeholder="Ingrese Nombre">
+                </div>
+                <div class="input-contenedor">
+                    <ion-icon name="lock-closed-outline"></ion-icon>
+                    <label for="pwd">Contraseña:</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="ingrese contraseña">
+                </div>    
+                <button type="submit" class="button">Ingresar</button>
+            </div>
+        </form>
+    </section> 
+</body>
+</html>
+

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RiverMC</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='historial.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+    <a href="{{ url_for('home') }}" class="logo">RiverMC</a>
+    <ul>
+        <li><a href="{{ url_for('home') }}">Inicio</a></li>
+        <li><a href="{{ url_for('registrarmoto') }}">Registrar Moto</a></li>
+        <li><a href="{{ url_for('inventario') }}">Inventario</a></li>
+        <li><a href="{{ url_for('reportes') }}">Reportes</a></li>
+        <li><a href="{{ url_for('configuracion') }}">Configuración</a></li>
+    </ul>
+</nav>
+<section class="historial">
+    <h2>Historial de Servicios</h2>
+    <div class="tabla-contenedor">
+        <form class="buscador" method="GET" action="{{ url_for('historial') }}">
+
+            <input
+                type="text"
+                placeholder="Buscar por placa..."
+                id="buscarPlaca"
+                name="buscarPlaca"
+            >
+
+            <button type="submit" class="btn-buscar">
+                Buscar
+            </button>
+
+            <a href="{{ url_for('historial') }}"
+            class="btn-volver-home">
+                Volver
+            </a>
+
+        </form>
+    </div>
+        <table class="tabla-servicios">
+            <thead>
+                <tr>
+                    <th>Placa</th>
+                    <th>Dueño</th>
+                    <th>Teléfono</th>
+                    <th>Servicio</th>
+                    <th>Productos</th>
+                    <th>Precio Lavado</th>
+                    <th>Precio Productos</th>
+                    <th>Total</th>
+                    <th>Método</th>
+                    <th>Entrada</th>
+                    <th>Salida</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            {% for dato in historial %}
+
+            <tr>
+
+                <td>{{ dato[1] }}</td>
+                <td>{{ dato[2] }}</td>
+                <td>{{ dato[3] }}</td>
+                <td>{{ dato[4] }}</td>
+                <td>${{ dato[5] }}</td>
+                <td>${{ dato[6] }}</td>
+                <td>${{ dato[7] }}</td>
+                <td>{{ dato[8] }}</td>
+                <td>{{ dato[9] }}</td>
+                <td>{{ dato[10] }}</td>
+                <td>{{ dato[11] }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+    <div class="paginacion">
+
+    {% if page > 1 %}
+        <a href="?page={{ page - 1 }}{% if buscar %}&buscarPlaca={{ buscar }}{% endif %}">
+            ⬅ Anterior
+        </a>
+    {% endif %}
+
+    <span>Página {{ page }} de {{ total_paginas }}</span>
+
+    {% if page < total_paginas %}
+        <a href="?page={{ page + 1 }}{% if buscar %}&buscarPlaca={{ buscar }}{% endif %}">
+            Siguiente ➡
+        </a>
+    {% endif %}
+
+    </div>
+</section>
+</body>
+</html>
